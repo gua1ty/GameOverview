@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CeresNova — Showcase | Gualtiero Bocaccio</title>
+  <meta name="description" content="Unity 2D farming-sim: plant, grow, harvest, earn, buy seeds. Showcase di feature e media (repo privata)." />
+  <style>
+    :root{
+      --bg:#0d1b1f;
+      --bg2:#1a2d33;
+      --text:#e8f0f2;
+      --muted: rgba(232,240,242,.75);
+      --muted2: rgba(232,240,242,.60);
+      --line: rgba(119,159,147,.25);
+      --accent-earth: #a67b5b;
+      --accent-plant: #6b9d7b;
+      --accent-teal: #4a8a8a;
+      --accent-dust: #8b7b9e;
+      --radius:12px;
+      --max: 1100px;
+      --shadow: 0 16px 48px rgba(0,0,0,.50);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(119,159,147,.12), transparent 50%),
+        radial-gradient(700px 500px at 80% 20%, rgba(166,123,91,.10), transparent 50%),
+        linear-gradient(180deg, #0d1b1f 0%, #1a2d33 50%, #0f1e22 100%);
+      line-height:1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x:hidden;
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:48px 24px 80px;
+    }
+
+    a{color:var(--accent-plant); text-decoration:none; transition:color .2s ease}
+    a:hover{color:#7eac8d}
+
+    /* Header (currently hidden) */
+    header{display:none;}
+    .header-left h1{display:none;}
+    .header-left p{display:none;}
+    .header-nav{display:none;}
+    .status-badge{display:none;}
+
+    .dot{
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:var(--accent-plant);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 14px;
+      border-radius:8px;
+      border:1px solid rgba(119,159,147,.3);
+      background:transparent;
+      color:var(--text);
+      font-weight:500;
+      font-size:13px;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+    .btn:hover{
+      background:rgba(119,159,147,.12);
+      border-color:rgba(119,159,147,.5);
+    }
+    .btn.primary{
+      background:rgba(166,123,91,.2);
+      border-color:rgba(166,123,91,.4);
+    }
+    .btn.primary:hover{
+      background:rgba(166,123,91,.3);
+      border-color:rgba(166,123,91,.6);
+    }
+
+    /* Hero */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:32px;
+      align-items:center;
+      margin-bottom:64px;
+    }
+    @media (max-width: 920px){ .hero{grid-template-columns:1fr; gap:24px} }
+
+    .hero-content h2{
+      margin:0 0 12px;
+      font-size:48px;
+      font-weight:700;
+      line-height:1.2;
+      color:var(--text);
+      letter-spacing:-.8px;
+    }
+
+    .hero-subtitle{
+      margin:0 0 16px;
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--accent-teal);
+    }
+
+    .hero-content p{
+      margin:0;
+      font-size:15px;
+      color:var(--muted);
+      line-height:1.7;
+      max-width:65ch;
+    }
+
+    .hero-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+
+    .tag{
+      padding:6px 10px;
+      font-size:12px;
+      color:var(--muted2);
+      background:rgba(119,159,147,.1);
+      border:1px solid rgba(119,159,147,.15);
+      border-radius:6px;
+      font-weight:500;
+    }
+
+    .hero-cta{
+      display:none;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    .hero-highlight{
+      margin-top:24px;
+      padding:14px 16px;
+      background:rgba(166,123,91,.08);
+      border-left:3px solid var(--accent-earth);
+      border-radius:6px;
+      font-size:13.5px;
+      line-height:1.6;
+      color:var(--muted);
+    }
+    .hero-highlight b{color:var(--accent-earth); font-weight:600}
+
+    .hero-image{
+      position:relative;
+    }
+
+    .hero-image img{
+      width:100%;
+      height:auto;
+      border-radius:8px;
+      border:1px solid var(--line);
+      background:rgba(119,159,147,.05);
+      display:block;
+      transition:all .3s ease;
+    }
+    .hero-image:hover img{
+      border-color:rgba(119,159,147,.35);
+    }
+
+    /* Sections */
+    .section{
+      margin-bottom:56px;
+    }
+
+    .section-header{
+      margin-bottom:24px;
+    }
+
+    .section-title{
+      margin:0;
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--accent-teal);
+    }
+
+    /* Steps */
+    .steps-container{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:12px;
+      margin-bottom:40px;
+    }
+    @media (max-width: 920px){ .steps-container{grid-template-columns:1fr} }
+
+    .step{
+      padding:16px;
+      background:rgba(119,159,147,.08);
+      border:1px solid var(--line);
+      border-radius:8px;
+      transition:all .2s ease;
+    }
+    .step:hover{
+      background:rgba(119,159,147,.12);
+      border-color:rgba(119,159,147,.35);
+    }
+    .step h4{
+      margin:0 0 6px;
+      font-size:13px;
+      font-weight:600;
+      color:var(--accent-plant);
+    }
+    .step p{
+      margin:0;
+      font-size:12px;
+      color:var(--muted2);
+      line-height:1.5;
+    }
+
+    /* Cards */
+    .cards-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:16px;
+    }
+    @media (max-width: 920px){ .cards-grid{grid-template-columns:1fr} }
+
+    .card{
+      padding:24px;
+      background:rgba(119,159,147,.08);
+      border:1px solid var(--line);
+      border-radius:8px;
+      transition:all .2s ease;
+    }
+    .card:hover{
+      background:rgba(119,159,147,.12);
+      border-color:rgba(119,159,147,.35);
+      transform:translateY(-2px);
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:15px;
+      font-weight:600;
+      color:var(--text);
+    }
+    .card p{
+      margin:0;
+      font-size:13px;
+      color:var(--muted2);
+      line-height:1.6;
+    }
+
+    /* Media (updated: 1 video + 2 images, images fill row) */
+    .media-section{
+      margin-top:24px;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr); /* 2 colonne: le immagini occupano tutta la riga */
+      gap:12px;
+      padding:16px;
+      background:rgba(119,159,147,.05);
+      border:1px solid var(--line);
+      border-radius:8px;
+      align-items:stretch;
+    }
+
+    .gallery .video-wide{
+      grid-column: 1 / -1; /* video a tutta larghezza */
+      aspect-ratio: 16/9;
+      width:100%;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background:#000;
+      display:block;
+    }
+
+    .gallery-item{
+      aspect-ratio:16/9;
+      border:1px solid var(--line);
+      border-radius:6px;
+      overflow:hidden;
+      background:rgba(119,159,147,.1);
+      display:block;
+      transition:all .2s ease;
+    }
+    .gallery-item:hover{
+      border-color:rgba(119,159,147,.35);
+    }
+    .gallery-item img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    @media (max-width: 920px){
+      .gallery{grid-template-columns:1fr;}
+      .gallery .video-wide{grid-column:auto;}
+      .gallery-item{aspect-ratio:16/10;}
+    }
+
+    /* Footer */
+    footer{
+      margin-top:48px;
+      padding-top:24px;
+      border-top:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      color:var(--muted2);
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="hero-content">
+        <h2>2D Farming Sim Set in Space</h2>
+        <p class="hero-subtitle">Pixel Art · Multidisciplinary Team · Unity Game</p>
+        <p>
+          A 2D farming simulation where players manage their own farm: plant seeds, nurture crops through growth stages, harvest fruits, earn currency, and purchase new seed varieties to expand gameplay progression.
+        </p>
+
+        <div class="hero-tags">
+          <span class="tag">Unity</span>
+          <span class="tag">C#</span>
+          <span class="tag">Git</span>
+          <span class="tag">Multidisciplinary Team</span>
+        </div>
+
+        <div class="hero-cta">
+          <a class="btn primary" href="#features">Explore Features</a>
+          <a class="btn" href="#media">View Media</a>
+        </div>
+
+        <div class="hero-highlight">
+          Core loop: <b>Plant</b> → <b>Grow</b> → <b>Harvest</b> → <b>Earn</b> → <b>Shop</b>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="assets/hero.png" alt="CeresNova Farm Interface" />
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-header">
+        <h3 class="section-title">Gameplay Features</h3>
+      </div>
+
+      <div class="steps-container">
+        <div class="step">
+          <h4>Plant</h4>
+          <p>Select seeds from toolbar and place them on farmland</p>
+        </div>
+        <div class="step">
+          <h4>Grow</h4>
+          <p>Crops progress through visual growth stages over time</p>
+        </div>
+        <div class="step">
+          <h4>Harvest</h4>
+          <p>Collect mature crops ready for collection</p>
+        </div>
+        <div class="step">
+          <h4>Earn</h4>
+          <p>Harvest generates currency for purchases</p>
+        </div>
+        <div class="step">
+          <h4>Shop</h4>
+          <p>Purchase from 3 seed varieties with varied rewards</p>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h3 class="section-title">Key Highlights</h3>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card">
+          <h3>Gameplay Loop</h3>
+          <p>Complete farming mechanics with tools, planting, growth stages, harvesting, and progression via in-game currency.</p>
+        </div>
+        <div class="card">
+          <h3>Progression System</h3>
+          <p>3 seed types with varying growth times and rewards. Initial starter seed plus unlockable premium varieties.</p>
+        </div>
+        <div class="card">
+          <h3>User Interface</h3>
+          <p>Tool toolbar with real-time feedback on selection and currency accumulation for clear player communication.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="media">
+      <div class="section-header">
+        <h3 class="section-title">Media Gallery</h3>
+      </div>
+
+      <div class="media-section">
+        <div class="gallery">
+          <video class="video-wide" controls>
+            <source src="assets/demo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <a class="gallery-item" href="assets/crops.png">
+            <img src="assets/crops.png" alt="Crops / plants view" />
+          </a>
+
+          <a class="gallery-item" href="assets/shop.png">
+            <img src="assets/shop.png" alt="Shop interface" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="y"></span> Gualtiero Bocaccio. All rights reserved.</div>
+      <div><a href="mailto:gualtiero.bocaccio24@gmail.com">Get in touch</a></div>
+    </footer>
+  </div>
+
+  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+</body>
+</html>
